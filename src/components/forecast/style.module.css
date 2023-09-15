@@ -5,19 +5,22 @@
   border-bottom: 1px #dfdfdf solid;
 }
 
-.arrow {
-  width: 24px;
-  height: 24px;
-  background-image: url("/static/images/icon_arrow.png") center center/cover;
-}
 .accordionBtn {
-  display: block;
+  display: flex;
   width: 100%;
   background-color: transparent;
   border: none;
   text-align: left;
   font-size: clamp(24px, 4vw, 30px);
   font-weight: 700;
+}
+
+.arrow {
+  margin-left: auto;
+}
+
+.arrowDown {
+  rotate: 180deg;
 }
 .dayInfo {
   display: flex;
@@ -43,4 +46,20 @@
   font-weight: 600;
   text-align: right;
   color: var(--gray-color);
+}
+
+@media only screen and (max-width: 768px) {
+  .dayInfo {
+    margin-top: 1rem;
+    border-radius: 6px;
+    flex-direction: column;
+    border: 1px #dfdfdf solid;
+  }
+  .time {
+    margin-right: 0;
+  }
+
+  .temperatureDesc {
+    text-align: center;
+  }
 }
