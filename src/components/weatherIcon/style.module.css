@@ -1,0 +1,21 @@
+.icon {
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+
+  border-radius: 50%;
+  text-align: center;
+  background-color: var(--primary-color-dark);
+}
+
+.small {
+  width: 4.6em;
+  height: 4.6em;
+}
+
+.large {
+  width: 6.15em;
+  height: 6.15em;
+}
