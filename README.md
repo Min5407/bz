@@ -1,34 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Buzz
 
-## Getting Started
+## 어플리케이션 실행 방법
 
-First, run the development server:
+Install: `yarn`
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+start: `yarn dev`
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 기술 스택
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+#### backend
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+1. graphql
+2. apollo server
+3. type graphql
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+#### frontend
 
-## Learn More
+1. typescript
+2. next js (12)
+3. graphql request
+4. graphql codegen/typescript
+5. css module
 
-To learn more about Next.js, take a look at the following resources:
+## etc
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. open weather api - 데이터만 가져와서 json 파일 생성 (API key 노출 위험)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Notes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. 처음으로 nextjs에서 apollo server와 graphql를 이용해 백엔드를 구축 해보았습니다.
+2. 좀 더 나은 프론트와 백엔드 환경을 위해 codegen을 이용해 자동 타입 생성 및 api 함수를 만들었습니다.
