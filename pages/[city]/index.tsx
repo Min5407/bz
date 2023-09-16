@@ -12,35 +12,40 @@ import { Weather } from "../../src/components/city/weather";
 export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   const city = String(query.city);
 
-  const [currentWeatherData, forecastData] = await Promise.all([
-    getCurrentWeather({ city }),
-    getForeCastData({ city }),
-  ]);
+  try {
+    const [currentWeatherData, forecastData] = await Promise.all([
+      getCurrentWeather({ city }),
+      getForeCastData({ city }),
+    ]);
+    const forecastDataInDays = () => {
+      const { list, city } = forecastData.getForeCast;
+      const foreCastDayList = [];
 
-  const forecastDataInDays = () => {
-    const { list, city } = forecastData.getForeCast;
-    const foreCastDayList = [];
+      let startIndex = 0;
 
-    let startIndex = 0;
+      for (let i = 0; i < list.length; i++) {
+        const isFinalDayTime = list[i].dt_txt.includes("21:00:00");
 
-    for (let i = 0; i < list.length; i++) {
-      const isFinalDayTime = list[i].dt_txt.includes("21:00:00");
-
-      if (isFinalDayTime) {
-        const day = list.slice(startIndex, i + 1);
-        foreCastDayList.push(day);
-        startIndex = i + 1;
+        if (isFinalDayTime) {
+          const day = list.slice(startIndex, i + 1);
+          foreCastDayList.push(day);
+          startIndex = i + 1;
+        }
       }
-    }
 
-    return { city, foreCastDayList };
-  };
-  return {
-    props: {
-      currentWeatherData: currentWeatherData.getCurrent,
-      forecastData: forecastDataInDays(),
-    },
-  };
+      return { city, foreCastDayList };
+    };
+    return {
+      props: {
+        currentWeatherData: currentWeatherData.getCurrent,
+        forecastData: forecastDataInDays(),
+      },
+    };
+  } catch (e) {
+    return {
+      notFound: true,
+    };
+  }
 };
 
 const CityPage = ({

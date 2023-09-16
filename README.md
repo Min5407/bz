@@ -30,3 +30,11 @@ start: `yarn dev`
 
 1. 처음으로 nextjs에서 apollo server와 graphql를 이용해 백엔드를 구축 해보았습니다.
 2. 좀 더 나은 프론트와 백엔드 환경을 위해 codegen을 이용해 자동 타입 생성 및 api 함수를 만들었습니다.
+3. next js (page route)를 처음으로 구축 해볼수 있었습니다.
+
+## 레퍼런스
+
+1. [codegen](https://the-guild.dev/graphql/codegen/plugins/typescript/typescript)
+2. [nextjs (page route)](https://nextjs.org/docs)
+3. [next-gql-dog](https://github.com/jherr/next-gql-dogs)
+4. [open weather](https://openweathermap.org/)
