@@ -1,0 +1,12 @@
+.img {
+  text-align: center;
+  margin-top: 2.7em;
+  margin-bottom: 0.625em;
+}
+
+.h1 {
+  font-size: clamp(24px, 5vw, 40px);
+  text-align: center;
+  font-weight: 900;
+  margin-bottom: 1em;
+}

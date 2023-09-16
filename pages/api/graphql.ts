@@ -2,11 +2,14 @@ import "reflect-metadata";
 import { ApolloServer } from "apollo-server-micro";
 import { NextApiRequest, NextApiResponse } from "next";
 
-import { DogsResolver } from "../../backend/schema/resolver";
+import {
+  WeatherDataResolver,
+  ForeCastDataResolver,
+} from "../../backend/schema/resolver";
 import { buildSchema } from "type-graphql";
 
 const schema = await buildSchema({
-  resolvers: [DogsResolver],
+  resolvers: [WeatherDataResolver, ForeCastDataResolver],
 });
 
 const server = new ApolloServer({

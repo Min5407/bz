@@ -1,22 +1,9 @@
-import type { GetServerSideProps } from "next";
 import styles from "../styles/Home.module.css";
 import commonStyles from "../styles/Common.module.css";
-import { getDogs } from "../src/api";
-import { GetDogsQuery } from "../src/generated/graphql";
 import Link from "next/link";
 import Image from "next/image";
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const dogs = await getDogs();
-
-  return {
-    props: {
-      dogs: dogs.dogs,
-    },
-  };
-};
-
-const Home = ({ dogs }: { dogs: GetDogsQuery["dogs"] }) => {
+const Home = () => {
   return (
     <main className={commonStyles.container}>
       <h1 className={styles.h1}>

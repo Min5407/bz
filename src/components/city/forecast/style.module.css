@@ -1,3 +1,15 @@
+.forecastContainer {
+  background-color: var(--white-color);
+  margin-top: 1.7em;
+  border: 1px #dfdfdf solid;
+}
+.forecastH2 {
+  font-size: clamp(24px, 4vw, 36px);
+  font-weight: 700;
+  text-align: center;
+  margin: 0.78em 0;
+}
+
 .accordion {
   width: 100%;
   padding: 1.75em;
@@ -13,21 +25,24 @@
   text-align: left;
   font-size: clamp(24px, 4vw, 30px);
   font-weight: 700;
+  cursor: pointer;
 }
 
-.arrow {
-  margin-left: auto;
+.accordionBtn > span {
+  margin-left: auto !important;
 }
 
 .arrowDown {
   rotate: 180deg;
 }
+
 .dayInfo {
   display: flex;
   padding: 1.5em;
   align-items: center;
   gap: 1.25em;
   align-items: center;
+  margin-top: 1em;
 }
 
 .time {

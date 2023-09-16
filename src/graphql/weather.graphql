@@ -1,0 +1,40 @@
+query getCurrentWeather($city: String!) {
+  getCurrent(city: $city) {
+    name
+    timezone
+    sys {
+      country
+    }
+    main {
+      temp
+      feels_like
+      humidity
+    }
+
+    weather {
+      description
+    }
+
+    wind {
+      speed
+    }
+  }
+}
+
+query getForeCastData($city: String!) {
+  getForeCast(city: $city) {
+    list {
+      dt_txt
+      weather {
+        description
+      }
+      main {
+        temp_min
+        temp_max
+      }
+    }
+    city {
+      timezone
+    }
+  }
+}

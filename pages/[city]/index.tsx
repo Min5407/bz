@@ -1,51 +1,65 @@
-import type { GetServerSideProps } from "next";
-import Image from "next/image";
-import Link from "next/link";
+import type { GetServerSideProps, NextPage } from "next";
 import CommonStyles from "../../styles/Common.module.css";
-import Styles from "../../styles/Detail.module.css";
-import { WeatherIcon } from "../../src/components/weatherIcon/WeatherIcon";
-import { Accordion } from "../../src/components/forecast/Accordion";
+import { getCurrentWeather, getForeCastData } from "../../src/api";
+import {
+  GetCurrentWeatherQuery,
+  GetForeCastDataQuery,
+} from "../../src/generated/graphql";
+import { ForeCastSection } from "../../src/components/city/forecast";
+import { Header } from "../../src/components/city/header";
+import { Weather } from "../../src/components/city/weather";
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const city = String(query.city);
+
+  const [currentWeatherData, forecastData] = await Promise.all([
+    getCurrentWeather({ city }),
+    getForeCastData({ city }),
+  ]);
+
+  const forecastDataInDays = () => {
+    const { list, city } = forecastData.getForeCast;
+    const foreCastDayList = [];
+
+    let startIndex = 0;
+
+    for (let i = 0; i < list.length; i++) {
+      const isFinalDayTime = list[i].dt_txt.includes("21:00:00");
+
+      if (isFinalDayTime) {
+        const day = list.slice(startIndex, i + 1);
+        foreCastDayList.push(day);
+        startIndex = i + 1;
+      }
+    }
+
+    return { city, foreCastDayList };
+  };
   return {
-    props: {},
+    props: {
+      currentWeatherData: currentWeatherData.getCurrent,
+      forecastData: forecastDataInDays(),
+    },
   };
 };
 
-const Home = () => {
+const CityPage = ({
+  currentWeatherData,
+  forecastData,
+}: {
+  currentWeatherData: GetCurrentWeatherQuery["getCurrent"];
+  forecastData: {
+    city: GetForeCastDataQuery["getForeCast"]["city"];
+    foreCastDayList: GetForeCastDataQuery["getForeCast"]["list"][];
+  };
+}) => {
   return (
     <main className={CommonStyles.container}>
-      <div className={Styles.img}>
-        <Image
-          src="/static/images/img_earth.png"
-          alt="earth"
-          width={68}
-          height={51}
-        />
-      </div>
-      <h1 className={Styles.h1}>Weather Information for Seoul</h1>
-
-      <section className={Styles.todayWeather}>
-        <WeatherIcon size="large" />
-        <div>
-          <p className={Styles.date}>May 23. 03:00am</p>
-          <p className={Styles.location}>
-            Seoul, KR <sub className={Styles.sub}>(인구수 : 10349312)</sub>
-          </p>
-        </div>
-        <div className={Styles.temperatureContainer}>
-          <p className={Styles.temperature}>292.98℃</p>
-          <sub className={Styles.sub}>
-            Feels like 291.91℃ clear sky 풍속 3.33m/s 습도 34%
-          </sub>
-        </div>
-      </section>
-      <section className={Styles.forecastContainer}>
-        <h2 className={Styles.forecastH2}>5-day Forecast</h2>
-        <Accordion />
-      </section>
+      <Header name={currentWeatherData.name} />
+      <Weather data={currentWeatherData} />
+      <ForeCastSection forecastData={forecastData.foreCastDayList} />
     </main>
   );
 };
 
-export default Home;
+export default CityPage;

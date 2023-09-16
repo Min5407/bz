@@ -1,21 +1,40 @@
 import { Resolver, Query, Arg } from "type-graphql";
+import { ForeCastData, WeatherData } from "./type";
+import currentWeatherDB from "../currentWeatherDB.json";
+import forecastDB from "../forecastDB.json";
 
-import { Dog } from "./dogs";
-import dogs from "./dogs.json";
+const getCurrentWeatherData = async (city: keyof typeof currentWeatherDB) => {
+  const response: WeatherData = currentWeatherDB[city];
 
-@Resolver(Dog)
-export class DogsResolver {
-  @Query(() => Dog, { nullable: true })
-  dog(@Arg("name", () => String) name: string): Dog | undefined {
-    const dog = dogs.find((dog) => dog.name === name);
-    if (dog === undefined) {
-      throw new Error("Dog not found");
-    }
-    return dog;
+  return response;
+};
+
+@Resolver(WeatherData)
+export class WeatherDataResolver {
+  @Query(() => WeatherData)
+  async getCurrent(
+    @Arg("city", () => String) city: keyof typeof currentWeatherDB
+  ): Promise<WeatherData | undefined> {
+    const result = await getCurrentWeatherData(city);
+
+    return result;
   }
+}
 
-  @Query(() => [Dog])
-  dogs(): Dog[] {
-    return dogs;
+const getForeCastData = async (city: keyof typeof forecastDB) => {
+  const response: ForeCastData = forecastDB[city];
+
+  return response;
+};
+
+@Resolver(ForeCastData)
+export class ForeCastDataResolver {
+  @Query(() => ForeCastData)
+  async getForeCast(
+    @Arg("city", () => String) city: keyof typeof forecastDB
+  ): Promise<ForeCastData | undefined> {
+    const result = await getForeCastData(city);
+
+    return result;
   }
 }

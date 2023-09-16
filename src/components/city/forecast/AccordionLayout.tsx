@@ -1,19 +1,29 @@
 import { useState } from "react";
-import { WeatherIcon } from "../weatherIcon/WeatherIcon";
 import Styles from "./style.module.css";
 import Image from "next/image";
 import classNames from "classnames";
+import { formatDate, getTimeInTimeZone } from "../../../utils/date";
 
-export const Accordion = () => {
+interface Props {
+  date: string;
+  children: React.ReactNode;
+}
+
+export const AccordionLayout = ({ children, date }: Props) => {
   const [isShow, setIsShow] = useState(false);
 
   const handleClick = () => {
     setIsShow((prev) => !prev);
   };
+  const formattedDate = formatDate(new Date(date), {
+    hour: undefined,
+    minute: undefined,
+  });
+
   return (
     <div className={Styles.accordion}>
       <button className={Styles.accordionBtn} onClick={handleClick}>
-        May 25
+        {formattedDate}
         <Image
           src="/arrow.png"
           width={24}
@@ -22,19 +32,8 @@ export const Accordion = () => {
           className={classNames(Styles.arrow, { [Styles.arrowDown]: !isShow })}
         />
       </button>
-      {isShow && (
-        <>
-          <section className={Styles.dayInfo}>
-            <WeatherIcon size="small" />
-            <p className={Styles.time}>03:00 pm</p>
 
-            <div>
-              <p className={Styles.temperatureDesc}>clear Sky</p>
-              <p className={Styles.temperature}>297.32℃ / 297.32℃</p>
-            </div>
-          </section>
-        </>
-      )}
+      {isShow && children}
     </div>
   );
 };
